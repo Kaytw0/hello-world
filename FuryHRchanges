@@ -1,0 +1,18 @@
+-- rampage,if=(buff.recklessness.up|buff.memory_of_lucid_dreams.up)|(talent.frothing_berserker.enabled|talent.carnage.enabled&(buff.enrage.remains<gcd|rage>74)|talent.massacre.enabled&(buff.enrage.remains<gcd|rage>90))
+    if S.Rampage:IsReadyP("Melee") and ((Player:BuffP(S.RecklessnessBuff) or Player:BuffP(S.MemoryofLucidDreams)) or (S.FrothingBerserker:IsAvailable() or S.Carnage:IsAvailable() and (Player:BuffRemainsP(S.EnrageBuff) < Player:GCD() or Player:Rage() > 90) or S.Massacre:IsAvailable() and (Player:BuffRemainsP(S.EnrageBuff) < Player:GCD() or Player:Rage() > 90))) then
+      if HR.Cast(S.Rampage) then return "rampage 20"; end
+
+
+ -- execute
+    if S.Execute:IsReady("Melee") and Player:Rage() < 70 then
+      if HR.Cast(S.Execute) then return "execute 34"; end
+
+
+ -- bloodthirst,if=buff.enrage.down|azerite.cold_steel_hot_blood.rank>1
+    if S.Bloodthirst:CooldownRemainsP() < 0.3 and (Player:BuffDownP(S.EnrageBuff) or S.ColdSteelHotBlood:AzeriteRank() > 1) then
+      if HR.Cast(S.Bloodthirst) then return "bloodthirst 38"; end
+
+
+ -- raging_blow,if=charges=2
+    if S.RagingBlow:CooldownRemainsP() < 0.3 and (S.RagingBlow:ChargesP() == 2) then
+      if HR.Cast(S.RagingBlow) then return "raging_blow 42"; end
